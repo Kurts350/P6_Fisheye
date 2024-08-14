@@ -16,19 +16,31 @@ header {
 
 h1 {
     color: #901C1C;
-    margin-right: 100px;
+    margin-right: 6em;
 }
 
+h2 {
+    margin-bottom: 0;
+
+}
+
+h3 {
+    margin: 0;
+}
+p {
+    margin: 0;
+}
 .logo {
     height: 50px;
-    margin-left: 100px;
+    margin-left: 6em;
 }
 
 .photographer_section {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 70px;
-    margin-top: 100px;
+    gap: 4em;
+    margin-top: 6em;
+    margin-bottom: 6em;
 }
 
 .photographer_section article {
@@ -41,10 +53,13 @@ h1 {
 
 .photographer_section article h2 {
     color: #D3573C;
-    font-size: 36px;
+    font-size: 2em;
 }
 
 .photographer_section article img {
-    height: 200px;
-    width: 200px;
+    height: 12em;
+    width: 12em;
+    object-fit:cover;
+    border-radius : 50%;
 }
+
