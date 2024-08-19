@@ -15,8 +15,8 @@ async function displayData(photographers) {
   photographersSection.innerHTML = userCardDOM
 }
 
+// Fonction qui initialise l'affichage
 async function init() {
-  // Récupère les datas des photographes
   const photographers = await getPhotographers();
   displayData(photographers);
 }

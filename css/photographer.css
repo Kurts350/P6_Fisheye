@@ -5,7 +5,32 @@
 .photograph-header {
     background-color: #FAFAFA;
     height: 300px;
-    margin: 0 100px;
+    margin: 0 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3%;
+}
+
+.photograph-header h1 {
+    margin: 0;
+    font-size: 3em;
+}
+
+.photograph-location{
+    color : #901C1C;
+}
+.photograph-description {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.photograph-img img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .contact_button {
