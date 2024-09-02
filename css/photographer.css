@@ -2,17 +2,17 @@
     display: none;
 }
 
-.photograph-header {
+/* Photograph Header */
+.header_photographe {
     background-color: #FAFAFA;
     height: 300px;
-    margin: 0 10%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 3%;
+    margin-bottom: 2.5em;
 }
 
-.photograph-header h1 {
+.header_photographe h1 {
     margin: 0;
     font-size: 3em;
 }
@@ -20,20 +20,20 @@
 .photograph-location{
     color : #901C1C;
 }
-.photograph-description {
+.photographe_description {
     display: flex;
     flex-direction: column;
     gap: 1em;
 }
 
-.photograph-img img {
+.header_photographe img {
     width: 200px;
     height: 200px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.contact_button {
+.bouton_contact {
     font-size: 20px;
     font-weight: bold;
     color: white;
@@ -46,7 +46,116 @@
     cursor: pointer;
 }
 
-.modal {
+/* menu filtre */
+.menu_filtre {
+    display: flex;
+    gap: 1em
+
+
+
+}
+.menu_filtre label {
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.menu_filtre button {
+    background-color: transparent;
+    color: white;
+    font-size: 1.2em;
+    font-weight: 700;
+
+    text-align: left;
+    border: none;
+    padding: 0.5em 2em;
+    height: 3em;
+    width: 9em;
+
+}
+
+.menu_filtre ul {
+    background: #901C1C;;
+    list-style-type: none;
+    border-radius: 0.5em;
+    position: relative;
+}
+
+.menu_filtre li {
+    border-bottom: 1px solid white;
+
+}
+
+.menu_filtre i {
+    color: white;
+    position: absolute;
+    top: 1.1em;
+    right: 0.5em;
+    cursor: pointer;
+}
+
+.menu_filtre, button {
+    cursor: pointer;
+}
+
+.visible {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Section Media */
+
+#medias {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 110px;
+    row-gap: 53px;
+    padding: 30px;
+}
+
+#medias article {
+    width: 25%;
+}
+
+#media, p, i {
+    color: #901C1C;
+}
+
+.description_media {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+#prix_likes{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: fixed;
+    bottom: 0;
+    right: 50px;
+    background: #DB8876;
+    font-size: 30px;
+    padding: 20px;
+    border-radius: 15px 15px 0 0;
+    gap: 20px;
+}
+
+#countLikes {
+    display: flex;
+    gap: 20px;
+
+}
+
+#medias img, video {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+}
+/* Modal de contact */
+.modal_background {
     border-radius: 5px;
     background-color: #DB8876;
     width: 50%;
@@ -58,16 +167,16 @@
     margin: auto;
 }
 
-.modal header {
+.modal_background header {
     justify-content: space-between;
     width: 100%;
 }
 
-.modal header img {
+.modal_background header img {
     cursor: pointer;
 }
 
-.modal header h2 {
+.modal_background header h2 {
     font-size: 64px;
     font-weight: normal;
     text-align: center;
@@ -93,9 +202,11 @@ form div {
     margin-bottom: 26px;
 }
 
-form input {
+form input, textarea {
     width: 100%;
     height: 68px;
     border: none;
     border-radius: 5px;
+    padding: 1em;
+    font-size: 1.5em;
 }

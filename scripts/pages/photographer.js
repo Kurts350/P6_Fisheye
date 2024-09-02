@@ -1,53 +1,35 @@
 //Mettre le code JavaScript lié à la page photographer.html
+import { recupererPhotographe  } from "../utils/entreeData.js";
+import { recupererMedia } from "../utils/entreeData.js";
+import { recupererUrl } from "../utils/interface_utilisateur.js";
+import { afficherHeaderPhotographe } from "../utils/interface_utilisateur.js";
+import { afficherMedia } from "../utils/interface_utilisateur.js";
+import { afficherPrix } from "../utils/interface_utilisateur.js";
+import { afficherMenuFiltre } from "../utils/interface_utilisateur.js";
 
-// Fonction qui récupère les données des photographes du fichier JSON
-async function getPhotographers() {
-    const reponse = await fetch("./data/photographers.json");
-    const datas = await reponse.json();
-    return datas.photographers;
-}  
+async function initialiserPagePhotographe() {
+  let identity = recupererUrl();
+  const photographerData = await recupererPhotographe();
+  const mediaData = await recupererMedia();
+  const photographer = photographerData.filter(
+    (photograph) => photograph.id == identity
+  );
+  const firstName = photographer[0].name.split(' ')[0];
+  const price = photographer[0].price;
 
-// Fonction qui récupère les données des média du fichier JSON
-async function getMedia() {
-    const reponse = await fetch("./data/photographers.json");
-    const datas = await reponse.json();
-    return datas.media;
-}
-
-// Fonction qui récupère l'url personnalisé par l'id de chaque photographe
-function getUrl() {
-    let params = (new URL(document.location)).searchParams
-    let id = parseInt(params.get("id"))
-    return id
-}    
+  const photographerMedias = mediaData.filter(media => media.photographerId == identity);
   
 
-function displayHeaderPhotograph(datas, idPhotographer) {
-    const photographer = datas.filter(photograph => photograph.id == idPhotographer)
-    const {name, portrait, city, country, tagline} = photographer[0]
+  afficherHeaderPhotographe(photographerData,identity);
+  afficherMedia(photographerMedias,firstName, null);
+  afficherPrix(photographerMedias, price, identity);
 
-    const divDescription = document.querySelector(".photograph-description")
-    const divImg = document.querySelector(".photograph-img")
-    
-    divDescription.innerHTML = `
-    <h1>${name}</h1>
-    <p class="photograph-location">${city}, ${country}</p>
-    <p>${tagline}</p>
-    `
-    divImg.innerHTML = `
-    <img src="./assets/photographers/${portrait}" alt="">
-    `
+
+document.querySelector("#fleche_haut").addEventListener("click", afficherMenuFiltre);
+document.querySelector("#fleche_bas").addEventListener("click", afficherMenuFiltre);
+
 }
 
-async function initPhotographerPage(){
-    let id = getUrl()
-    const photographersData = await getPhotographers()
-    const mediaData = await getMedia()
-    const photographer = photographersData.filter(photograph => photograph.id == id)
-    const firstName = photographer[0].name
-    const price = photographer[0].price
 
-    displayHeaderPhotograph(photographersData,id)
-}
 
-initPhotographerPage()
+initialiserPagePhotographe();

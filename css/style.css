@@ -2,7 +2,7 @@
 
 body {
     font-family: "DM Sans", sans-serif;
-    margin: 0;
+    margin: 0 10%;
 }
 
 
@@ -32,10 +32,9 @@ p {
 }
 .logo {
     height: 50px;
-    margin-left: 6em;
 }
 
-.photographer_section {
+.section_photographe {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 4em;
@@ -43,7 +42,7 @@ p {
     margin-bottom: 6em;
 }
 
-.photographer_section article {
+.section_photographe article {
     justify-self: center;
     display: flex;
     justify-content: center;
@@ -51,16 +50,16 @@ p {
     flex-direction: column;
 }
 
-.photographer_section a {
+.section_photographe a {
     text-decoration: none;
 }
 
-.photographer_section article h2 {
+.section_photographe article h2 {
     color: #D3573C;
     font-size: 2em;
 }
 
-.photographer_section article img {
+.section_photographe article img {
     height: 12em;
     width: 12em;
     object-fit:cover;

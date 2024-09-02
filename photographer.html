@@ -6,39 +6,85 @@
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/wild_card.css">
     <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="photographer.html">
-
-    <title>Fisheye - photographe </title>
+    <link rel="stylesheet" href="css/photographer.css">
+    <title>Fisheye - Photographe</title>
     <script src="./scripts/pages/photographer.js" defer></script>
+    <script src="https://kit.fontawesome.com/276660d3a9.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <header>
-      <img src="assets/images/logo.png" class="logo" alt="logo fisheye" tabindex="0"/>
+      <a href="index.html">
+        <img src="assets/images/logo.png" class="logo" alt="logo Fisheyes" tabindex="0"/>
+      </a>
     </header>
-    <main id="main">
-      <div class="photograph-header">
-        <div class="photograph-description">
+    <main id="contenu_principal" aria-hidden="false">
+      <section class="header_photographe">
+        <div class="photographe_description"></div>
+        <div id="donnees_photographe"></div>
+        <div id="bouton_contact">
+          <button class="bouton_contact" onclick="displayModal()" aria-haspopup="dialog" aria-controls="contact_modal" aria-label="Contactez-moi">Contactez-moi</button>
         </div>
-        <button class="contact_button" onclick="displayModal()" aria-haspopup="dialog" aria-controls="contact_modal">Contactez-moi</button>
-        <div class="photograph-img"></div>
-      </div>
+        <div class="photo_photographe"></div>
+      </section>
     </main>
-    <div id="contact_modal">
-			<div class="modal">
-				<header>
+
+    <section class="section_media">
+      <div class="menu_filtre">
+        <label id="label_tri">Trier par</label>
+        <ul id="liste_filtres" role="listbox">
+          <li id="premier_tri" aria-selected="true" aria-checked="true" role="listitem">
+            <button class="bouton_liste" id="tri_popularite" aria-labelledby="label_tri">Popularité</button>
+          </li>
+          <li>
+            <span id="fleche_bas" class="visible" tabindex="0" role="button" aria-haspopup="listbox"
+              aria-expanded="false">
+              <i class="fa-solid fa-angle-down fa-lg"></i>
+            </span>
+            <span id="fleche_haut" class="hidden" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="true">
+              <i class="fa-solid fa-angle-up fa-lg"></i>
+            </span>
+          </li>
+          <li class="hidden" id="deuxieme_tri">
+            <button class="bouton_liste espace_bouton" id="tri_date" aria-labelledby="label_tri">Date</button>
+          </li>
+          <li class="hidden" id="troisieme_tri">
+            <button class="bouton_liste espace_bouton" id="tri_titre" aria-labelledby="label_tri">Titre</button>
+          </li>
+        </ul>
+      </div>
+
+      <div id="medias"></div>
+    </section>
+    <div id="prix_likes"></div>
+
+    <div id="contact_modal" aria-hidden="true" aria-modal="true" role="dialog">
+      <div class="modal_background">
+        <header>
           <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" aria-label="Fermer la modal"/>
+          <img src="assets/icons/close.svg" onclick="closeModal()" aria-label="Fermer le formulaire de contact" alt=""/>
         </header>
-				<form>
-					<div>
-						<label for="firstname">Prénom</label>
-						<input name="firstname" id="firstname" />
-					</div>
-          <button class="contact_button">Envoyer</button>
-				</form>
-			</div>
-		</div>
-    <script src="/scripts/pages/photographer.js"></script>
-    <script src="/scripts/utils/contactForm.js"></script>
+        <form action="#" method="post" aria-hidden="true">
+          <div class="champ_formulaire">
+            <label for="prenom" id="etiquette_prenom">Prénom</label>
+            <input name="prenom" id="prenom" placeholder="Jean" aria-labelledby="etiquette_prenom"/>
+          </div>          
+          <div class="champ_formulaire">
+            <label for="nom" id="etiquette_nom">Nom</label>
+            <input name="nom" id="nom" placeholder="Dupont" aria-labelledby="etiquette_nom"/>
+          </div>
+          <div class="champ_formulaire">
+            <label for="email" id="etiquette_email">Email</label>
+            <input name="email" id="email" / placeholder="jean.dupont@mail.com" aria-labelledby="etiquette_email">
+          </div>
+          <div class="champ_formulaire">
+            <label for="message" id="etiquette_message">Message</label>
+            <textarea name="message" id="message" placeholder="Ecrivez votre message" aria-labelledby="etiquette_message"></textarea>
+          </div>
+          <button class="bouton_contact" aria-label="Envoyer">Envoyer</button>
+        </form>
+      </div>
+    </div>
+    <script src="./scripts/pages/photographer.js" type="module"></script>
+    <script src="./scripts/utils/formulaire_contact.js"></script>
   </body>
 </html>
