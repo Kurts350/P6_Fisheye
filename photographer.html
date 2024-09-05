@@ -11,7 +11,7 @@
     <script src="./scripts/pages/photographer.js" defer></script>
     <script src="https://kit.fontawesome.com/276660d3a9.js" crossorigin="anonymous"></script>
   </head>
-  <body>
+  <body id="body">
     <header>
       <a href="index.html">
         <img src="assets/images/logo.png" class="logo" alt="logo Fisheyes" tabindex="0"/>
@@ -22,7 +22,7 @@
         <div class="photographe_description"></div>
         <div id="donnees_photographe"></div>
         <div id="bouton_contact">
-          <button class="bouton_contact" onclick="displayModal()" aria-haspopup="dialog" aria-controls="contact_modal" aria-label="Contactez-moi">Contactez-moi</button>
+          <button class="bouton_contact" id="ouvrirModal" aria-haspopup="dialog" aria-controls="contact_modal" aria-label="Contactez-moi">Contactez-moi</button>
         </div>
         <div class="photo_photographe"></div>
       </section>
@@ -60,29 +60,30 @@
     <div id="contact_modal" aria-hidden="true" aria-modal="true" role="dialog">
       <div class="modal_background">
         <header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" aria-label="Fermer le formulaire de contact" alt=""/>
+          <h2 id="contactMe">Contactez-moi</h2>
+          <img src="assets/icons/close.svg" id="fermer_form_contact"  aria-label="Fermer le formulaire de contact" alt=""/>
         </header>
-        <form action="#" method="post" aria-hidden="true">
-          <div class="champ_formulaire">
-            <label for="prenom" id="etiquette_prenom">Prénom</label>
-            <input name="prenom" id="prenom" placeholder="Jean" aria-labelledby="etiquette_prenom"/>
+        <form action="#" method="post" aria-hidden="true" id="formulaire_contact">
+          <div class="champ_formulaire" >
+            <label for="prenom" id="saisie_prenom" >Prénom</label>
+            <input name="prenom" id="prenom" placeholder="Jean" aria-labelledby="saisie_prenom" />
           </div>          
           <div class="champ_formulaire">
-            <label for="nom" id="etiquette_nom">Nom</label>
-            <input name="nom" id="nom" placeholder="Dupont" aria-labelledby="etiquette_nom"/>
+            <label for="nom" id="saisie_nom">Nom</label>
+            <input name="nom" id="nom" placeholder="Dupont" aria-labelledby="saisie_nom"/>
           </div>
-          <div class="champ_formulaire">
-            <label for="email" id="etiquette_email">Email</label>
-            <input name="email" id="email" / placeholder="jean.dupont@mail.com" aria-labelledby="etiquette_email">
+          <div class="champ_formulaire" data-error="Veuillez entrer une adresse mail valide.">
+            <label for="email" id="saisie_email">Email</label>
+            <input name="email" id="email" / placeholder="jean.dupont@mail.com" aria-labelledby="saisie_email">
           </div>
-          <div class="champ_formulaire">
-            <label for="message" id="etiquette_message">Message</label>
-            <textarea name="message" id="message" placeholder="Ecrivez votre message" aria-labelledby="etiquette_message"></textarea>
+          <div class="champ_formulaire" data-error="Veuillez saisir au minimum 10 caractères">
+            <label for="message" id="saisie_message">Message</label>
+            <textarea name="message" id="message" placeholder="Ecrivez votre message" aria-labelledby="saisie_message"></textarea>
           </div>
-          <button class="bouton_contact" aria-label="Envoyer">Envoyer</button>
+          <input type="submit" class="bouton_contact" aria-label="Envoyer">
         </form>
       </div>
+      <div class="form_background"></div>     
     </div>
     <script src="./scripts/pages/photographer.js" type="module"></script>
     <script src="./scripts/utils/formulaire_contact.js"></script>

@@ -29,7 +29,7 @@ export function afficherHeaderPhotographe(data, idPhotographer) {
   const divImg = document.querySelector(".photo_photographe");
 
   divDescription.innerHTML = `
-    <h1>${name}</h1>
+    <h1 class="prenom">${name}</h1>
     <p class="photograph-location">${city}, ${country}</p>
     <p>${tagline}</p>
     `;
