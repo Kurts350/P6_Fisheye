@@ -16,7 +16,6 @@ header {
 
 h1 {
     color: #901C1C;
-    margin-right: 6em;
 }
 
 h2 {
@@ -40,6 +39,8 @@ p {
     gap: 4em;
     margin-top: 6em;
     margin-bottom: 6em;
+    text-align: center;
+
 }
 
 .section_photographe article {

@@ -1,8 +1,8 @@
-export function photographerFactory(data) {
-  const { name, portrait, city, country, tagline, price, id } = data;
+export function photographerFactory(donnee) {
+  const { name, portrait, city, country, tagline, price, id } = donnee;
   const article = `
     <article>
-        <a href="./photographer.html?id=${id}" title="${name}">
+        <a href="./photographe.html?id=${id}" title="${name}">
             <img src="./assets/photographers/${portrait}" alt="">
             <h2>${name}</h2>
         </a>

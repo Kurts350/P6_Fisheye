@@ -1,36 +1,35 @@
-import { photographerFactory } from "../factories/photographer.js";
+import { photographerFactory } from "../factories/photographe.js";
 import MediaFactory from "../factories/mediaFactory.js";
 
 // Fonction qui affiche chaque card photographe dans le DOM
-export async function afficherDonnees(photographers) {
-  const photographersSection = document.querySelector(".section_photographe");
-  let userCardDOM = "";
-  photographers.forEach((photographer) => {
-    userCardDOM += photographerFactory(photographer);
+export async function afficherDonnees(photographes) {
+  const photographesSection = document.querySelector(".section_photographe");
+  let profileCardDOM = "";
+  photographes.forEach((photographe) => {
+    profileCardDOM += photographerFactory(photographe);
   });
-  photographersSection.innerHTML = userCardDOM;
+  photographesSection.innerHTML = profileCardDOM;
 }
 
 // Fonction qui récupère l'url personnalisé par l'id de chaque photographe
 export function recupererUrl() {
   let params = new URL(document.location).searchParams;
-  let identity = parseInt(params.get("id"));
-  return identity;
+  let identite = parseInt(params.get("id"));
+  return identite;
 }
 
 // Fonction qui affiche les données d'un photographe sur sa page
-export function afficherHeaderPhotographe(data, idPhotographer) {
-  const photographer = data.filter(
-    (photograph) => photograph.id == idPhotographer
+export function afficherHeaderPhotographe(donnee, idPhotographe) {
+  const photographe = donnee.filter(
+    (photograph) => photograph.id == idPhotographe
   );
-  const { name, portrait, city, country, tagline } = photographer[0];
-  const divData = document.getElementById("donnees_photographe");
+  const { name, portrait, city, country, tagline } = photographe[0];
   const divDescription = document.querySelector(".photographe_description");
   const divImg = document.querySelector(".photo_photographe");
 
   divDescription.innerHTML = `
     <h1 class="prenom">${name}</h1>
-    <p class="photograph-location">${city}, ${country}</p>
+    <p class="photographe-localisation">${city}, ${country}</p>
     <p>${tagline}</p>
     `;
   divImg.innerHTML = `
@@ -38,16 +37,18 @@ export function afficherHeaderPhotographe(data, idPhotographer) {
     `;
 }
 
-export function afficherMedia(medias, firstName, sortBy) {
+export function afficherMedia(medias, prenom, trierPar, lightbox) {
+  /* zone pour depoloyer les médias */
   const divMedias = document.getElementById("medias");
-  let articlesList = "";
-  let sortedMedias = null;
-  let temporary = null;
-  let currentParent = null;
+  let articlesListe = "";
+  let mediasTrier = null;
+  let temporaire = null;
+  let parentActuel = null;
 
-  switch (sortBy) {
+  // Tri décroissant likes du média. les opérateurs de comparaison sont inversés pour passer en tri croissant
+  switch (trierPar) {
     case "Likes":
-      sortedMedias = medias.sort(function (a, b) {
+      mediasTrier = medias.sort(function (a, b) {
         if (a.likes < b.likes) {
           return 1;
         } else if (a.likes > b.likes) {
@@ -56,10 +57,12 @@ export function afficherMedia(medias, firstName, sortBy) {
           return 0;
         }
       });
-      currentParent = document.getElementById("tri_popularite").parentElement.id;
+      parentActuel = document.getElementById("tri_popularite").parentElement.id;
       break;
+
+    // Tri décroissant de la date du média.
     case "Date":
-      sortedMedias = medias.sort(function (a, b) {
+      mediasTrier = medias.sort(function (a, b) {
         a = new Date(a.date);
         b = new Date(b.date);
         if (a < b) {
@@ -70,11 +73,12 @@ export function afficherMedia(medias, firstName, sortBy) {
           return 0;
         }
       });
-      currentParent = document.getElementById("tri_date").parentElement.id;
+      parentActuel = document.getElementById("tri_date").parentElement.id;
       break;
 
-    case "Title":
-      sortedMedias = medias.sort(function (a, b) {
+    // Tri décroissant du titre du média.
+    case "Titre":
+      mediasTrier = medias.sort(function (a, b) {
         if (a.title > b.title) {
           return 1;
         } else if (a.title < b.title) {
@@ -83,11 +87,12 @@ export function afficherMedia(medias, firstName, sortBy) {
           return 0;
         }
       });
-      currentParent = document.getElementById("tri_titre").parentElement.id;
+      parentActuel = document.getElementById("tri_titre").parentElement.id;
       break;
 
+    // Tri par defaut de manière decroissante le like du média.
     default:
-      sortedMedias = medias.sort(function (a, b) {
+      mediasTrier = medias.sort(function (a, b) {
         if (a.likes < b.likes) {
           return 1;
         } else if (a.likes > b.likes) {
@@ -96,48 +101,69 @@ export function afficherMedia(medias, firstName, sortBy) {
           return 0;
         }
       });
-      currentParent = document.getElementById("tri_date").parentElement.id;
+      parentActuel = document.getElementById("tri_popularite").parentElement.id;
       break;
   }
 
-  temporary = document.getElementById("premier_tri").innerHTML;
-  document.getElementById("premier_tri").innerHTML = document.getElementById(currentParent).innerHTML;
-  document.getElementById(currentParent).innerHTML = temporary;
+  // Les boutons de trie s'inversent selon le boutton cliqué
+  temporaire = document.getElementById("premier_tri").innerHTML;
+  document.getElementById("premier_tri").innerHTML =
+    document.getElementById(parentActuel).innerHTML;
+  document.getElementById(parentActuel).innerHTML = temporaire;
 
   document.querySelector("#tri_popularite").addEventListener("click", () => {
-    afficherMedia(sortedMedias, firstName, "Likes");
-
+    afficherMedia(mediasTrier, prenom, "Jaime", lightbox);
   });
   document.querySelector("#tri_date").addEventListener("click", () => {
-    afficherMedia(sortedMedias, firstName, "Date");
+    afficherMedia(mediasTrier, prenom, "Date", lightbox);
   });
   document.querySelector("#tri_titre").addEventListener("click", () => {
-    afficherMedia(sortedMedias, firstName, "Title");
+    afficherMedia(mediasTrier, prenom, "Titre", lightbox);
   });
 
-  for (const mediaItem of sortedMedias) {
-    let mediaCard = new MediaFactory(mediaItem, firstName);
-    articlesList += mediaCard.article;
+
+  // Les cartes medias parcours les medias tries
+  for (const mediaObject of mediasTrier) {
+    let mediaCard = new MediaFactory(mediaObject, prenom);
+    articlesListe += mediaCard.article;
   }
 
-  divMedias.innerHTML = articlesList;
+  // Affiche le media dans son emplacement html
+  divMedias.innerHTML = articlesListe;
+
+  // Chaque lightbox pointe sur le lien de chaque média
+  let listeLiensMedias = document.querySelectorAll("a.lienMedia");
+  lightbox.mediasList = mediasTrier;
+
+  // Ajouter un écouteur d'événement sur le clic du cœur de chaque carte afin d'incrémenter le nombre de likes de la carte, puis mettre à jour le total global des likes de toutes les cartes.
+  let listDivLike = document.querySelectorAll("div.totalLikes");
+  for (const like of listDivLike) {
+    like.addEventListener("click", ajouterLike);
+  }
+
+  for (const lien of listeLiensMedias) {
+    lien.addEventListener("click", (event) => {
+      lightbox.launch(event.currentTarget.dataset.id);
+    });
+  }
 }
 
-export function afficherPrix(medias, price, id) {
+export function afficherPrix(medias, prix, id) {
   const mediasList = medias.filter((media) => media.photographerId == id);
   let content = document.getElementById("prix_likes");
-  let likesCount = 0;
+  let compteLikes = 0;
   for (const media of mediasList) {
-    likesCount += media.likes;
+    compteLikes += media.likes;
   }
 
-  content.innerHTML = `<div id="countLikes">
-                        <p>${likesCount}</p>
+  content.innerHTML = `<div id="compteLikes">
+                        <p>${compteLikes}</p>
                         <i class="fa-solid fa-heart"></i>
                       </div> 
-                      <p>${price}€ / jour</p>`;
+                      <p>${prix}€ / jour</p>`;
 }
 
+// Gere l'affichage du menu de tri
 export function afficherMenuFiltre() {
   document.querySelector("#fleche_haut").classList.toggle("visible");
   document.querySelector("#fleche_haut").classList.toggle("hidden");
@@ -155,4 +181,34 @@ export function afficherMenuFiltre() {
   document.querySelector("#deuxieme_tri").classList.toggle("hidden");
   document.querySelector("#troisieme_tri").classList.toggle("visible");
   document.querySelector("#troisieme_tri").classList.toggle("hidden");
+}
+
+//  Incrementation du nombre de like
+export function ajouterLike() {
+  let actuel = parseInt(this.firstElementChild.innerText);
+  this.firstElementChild.innerText = actuel + 1;
+  let nombreLike = this.firstElementChild.innerText;
+  this.firstElementChild.innerHTML = `<span class="marginLikes">${nombreLike}</span><button aria-label="likes"><i class="fa-heart fas iconHeart" aria-hidden="true"></i></button>`;
+  this.removeEventListener("click", ajouterLike);
+  this.addEventListener("click", retirerLike);
+  let totalActuel = parseInt(
+    document.getElementById("compteLikes").firstElementChild.innerText
+  );
+  document.getElementById("compteLikes").firstElementChild.innerText =
+    totalActuel + 1;
+}
+
+// Decrementation du nombre de like
+export function retirerLike() {
+  let actuel = parseInt(this.firstElementChild.innerText);
+  this.firstElementChild.innerText = actuel - 1;
+  let nombreLike = this.firstElementChild.innerText;
+  this.firstElementChild.innerHTML = `<span class="marginLikes">${nombreLike}</span><button aria-label="likes"><i class="fa-heart far iconHeart" aria-hidden="true"></i></button>`;
+  this.removeEventListener("click", retirerLike);
+  this.addEventListener("click", ajouterLike);
+  let totalActuel = parseInt(
+    document.getElementById("compteLikes").firstElementChild.innerText
+  );
+  document.getElementById("compteLikes").firstElementChild.innerText =
+    totalActuel - 1;
 }

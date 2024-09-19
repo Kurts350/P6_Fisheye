@@ -1,25 +1,28 @@
 export default class Media {
   constructor(options) {
-    this.title = options.title;
-    this.likes = options.likes;
-    this.id = options.id;
+    this._title = options.title;
+    this._likes = options.likes;
+    this._id = options.id;
   }
-
+// Le média qui s'affiche dans la zone médias de chaque photographe
   create(mediaContent) {
-    this.article = `
-        <article>
-            <a href="#" title="${this.title}, vue agrandie" data-id="${this.id}" id="${this.id}" class="" role="button" aria-haspopup="dialog" aria-controls="lightbox">
-             ${mediaContent}
-            </a>
-            <div class="descriptionMedia">
-              <p class="titleMedia">${this.title}</p>
-              <div class="Likes" aria-label="likes">
-                  <p>${this.likes}</p>
-                  <i class="fa-solid fa-heart fa-lg"></i>
-              </div>
-            </div>
-        </article>
-        `;
+    this.article = `<article class="articleMedia">
+    <a href="#" title="${this._title}, vue agrandie" data-id="${this._id}" id="${this._id}" class="lienMedia" role="button" aria-haspopup="dialog" aria-controls="lightbox">
+     ${mediaContent}
+    </a>                            
+    <div class="media-display">
+    <h2 class="titleMedia">${this._title}</h2>
+    <div class="totalLikes">
+        <div class="contentLikes">
+            <span class="marginLikes">${this._likes}</span>
+            <button aria-label="likes">
+            <i class="fa-heart far iconHeart" aria-hidden="true"></i>
+            </button>
+        </div>   
+    </div>
+    </div>
+
+</article>`;
 
   }
 }

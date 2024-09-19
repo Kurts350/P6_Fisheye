@@ -3,8 +3,8 @@ import { afficherDonnees } from "../utils/interface_utilisateur.js";
 
 // Fonction qui initialise l'affichage
 async function init() {
-  const photographers = await recupererPhotographe();
-  afficherDonnees(photographers);
+  const photographes = await recupererPhotographe();
+  afficherDonnees(photographes);
 }
 
 init();
